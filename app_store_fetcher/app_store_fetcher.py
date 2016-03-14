@@ -67,6 +67,24 @@ class Review(object):
         return self._json_dict["im:version"]["label"]
 
 
+def fetch_reviews(app_id, page_num):
+    """Fetch a single page of reviews for a given app_id.
+
+    :param app_id: The ID of the app in the app store.
+    :param page_num: The page of reviews to fetch.
+    :return: A list of Review objects.
+    """
+    # page=1 is the same as if the "page" param was left off.
+    url = "https://itunes.apple.com/us/rss/customerreviews/page={page_num}/id={app_id}/sortBy=mostRecent/json".format(
+        page_num=page_num,
+        app_id=app_id,
+    )
+    r = requests.get(url)
+    feed_json = r.json()["feed"]
+
+    return [Review(entry) for entry in feed_json["entry"] if Review.is_review(entry)]
+
+
 if __name__ == "__main__":
     # TODO - Ryan - Eventually break this down and pass the url parameters properly
     # TODO - Ryan - Implement following next/previous links.
