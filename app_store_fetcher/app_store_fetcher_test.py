@@ -32,6 +32,15 @@ def _review(json_dict=None):
 
 class TestReview(unittest.TestCase):
     # TODO - Ryan - add test for is_review function
+
+    def test_should_evaluate_the_review_objects_as_equalivalent(self):
+        self.assertEqual(_review(json_dict=json.loads(_create_review_json_str(title="Ryan's great review"))),
+                         _review(json_dict=json.loads(_create_review_json_str(title="Ryan's great review"))))
+
+    def test_should_evaluate_the_review_objects_as_not_equivalent(self):
+        self.assertNotEqual(_review(json_dict=json.loads(_create_review_json_str(title="Bo's bad review"))),
+                            _review(json_dict=json.loads(_create_review_json_str(title="Ryan's better review"))))
+
     def test_should_return_author_name(self):
         review = _review()
         self.assertEqual("Awesome he", review.author_name())

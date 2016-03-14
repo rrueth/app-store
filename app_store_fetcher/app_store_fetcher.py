@@ -37,6 +37,9 @@ class Review(object):
     def __init__(self, json_dict):
         self._json_dict = json_dict
 
+    def __eq__(self, other):
+        return bool(self._json_dict == other._json_dict)
+
     @staticmethod
     def is_review(json_dict):
         """
