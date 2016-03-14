@@ -35,7 +35,7 @@ class Review(object):
         - label ("0", not sure what this is yet)
     """
     def __init__(self, json_dict):
-        self.json_dict = json_dict
+        self._json_dict = json_dict
 
     @staticmethod
     def is_review(json_dict):
@@ -46,22 +46,22 @@ class Review(object):
         return bool("im:rating" in json_dict)
 
     def author_name(self):
-        return self.json_dict["author"]["name"]["label"]
+        return self._json_dict["author"]["name"]["label"]
 
     def content(self):
-        return self.json_dict["content"]["label"]
+        return self._json_dict["content"]["label"]
 
     def rating(self):
         """
         :return: An integer from 1 to 5 denoting the number of stars given by the reviewer.
         """
-        return int(self.json_dict["im:rating"]["label"])
+        return int(self._json_dict["im:rating"]["label"])
 
     def title(self):
-        return self.json_dict["title"]["label"]
+        return self._json_dict["title"]["label"]
 
     def version(self):
-        return self.json_dict["im:version"]["label"]
+        return self._json_dict["im:version"]["label"]
 
 
 if __name__ == "__main__":
