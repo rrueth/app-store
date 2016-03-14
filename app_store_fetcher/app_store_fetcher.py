@@ -86,24 +86,11 @@ def fetch_reviews(app_id, page_num):
 
 
 if __name__ == "__main__":
-    # TODO - Ryan - Eventually break this down and pass the url parameters properly
-    # TODO - Ryan - Implement following next/previous links.
+    SHOPKICK_ID = 383298204
     content_strings = []
     urls = ["https://itunes.apple.com/us/rss/customerreviews/id=383298204/sortBy=mostRecent/json"]
-    for i in range(1, 11):
-        urls.append(
-            "https://itunes.apple.com/us/rss/customerreviews/page={page_num}/id=383298204/sortby=mostrecent/json".format(
-                page_num=i,
-            ))
-    # urls =[]
-    for url in urls:
-        print(url)
-        r = requests.get(url)
+    for page_num in range(1, 11):
+        reviews = fetch_reviews(app_id=SHOPKICK_ID, page_num=page_num)
+        content_strings.extend([r.content() for r in reviews])
+    print("\n".join(content_strings))
 
-        # TODO - Ryan:
-        # - Parse the JSON
-        feed_json = r.json()["feed"]
-        # print(feed_json)
-        for entry in feed_json["entry"]:
-            if Review.is_review(entry):
-                content_strings.append(Review(entry).content())
