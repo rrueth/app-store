@@ -3,28 +3,30 @@ import unittest
 
 import app_store_fetcher
 
-REVIEW_ENTRY = """{
-  "im:version": {"label": "4.8.1"},
-  "title": {"label": "Shop kick"},
-  "author": {"label": "",
-             "uri": {"label": "https://itunes.apple.com/us/reviews/id171860631"},
-             "name": {"label": "Awesome he"}},
-  "im:voteCount": {"label": "0"},
-  "content": {"attributes": {"type": "text"},
-              "label": "I love this but it does not have a lot of stuff that in our area on it."},
-  "link": {"attributes": {"href": "https://itunes.apple.com/us/review?id=383298204&type=Purple%20Software",
-                          "rel": "related"}},
-  "im:rating": {"label": "5"},\
-  "im:contentType": {"attributes": {"term": "Application",
-                                    "label": "Application"}},
-  "id": {"label": "1330930867"},
-  "im:voteSum": {"label": "0"}
-}
+REVIEW_ENTRY = """{{
+  "im:version": {{"label": "4.8.1"}},
+  "title": {{"label": "{title}"}},
+  "author": {{"label": "",
+             "uri": {{"label": "https://itunes.apple.com/us/reviews/id171860631"}},
+             "name": {{"label": "Awesome he"}}}},
+  "im:voteCount": {{"label": "0"}},
+  "content": {{"attributes": {{"type": "text"}},
+              "label": "I love this but it does not have a lot of stuff that in our area on it."}},
+  "link": {{"attributes": {{"href": "https://itunes.apple.com/us/review?id=383298204&type=Purple%20Software",
+                          "rel": "related"}}}},
+  "im:rating": {{"label": "5"}},\
+  "im:contentType": {{"attributes": {{"term": "Application",
+                                    "label": "Application"}}}},
+  "id": {{"label": "1330930867"}},
+  "im:voteSum": {{"label": "0"}}
+}}
 """
 
+def _create_review_json_str(title="Shop kick"):
+    return REVIEW_ENTRY.format(title=title)
 
 def _review(json_dict=None):
-    json_dict = json_dict or json.loads(REVIEW_ENTRY)
+    json_dict = json_dict or json.loads(_create_review_json_str())
     return app_store_fetcher.Review(json_dict)
 
 
