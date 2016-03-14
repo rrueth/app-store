@@ -60,6 +60,17 @@ class TestReview(unittest.TestCase):
         self.assertNotEqual(_review(json_dict=json.loads(_create_review_json_str(title="Bo's bad review"))),
                             _review(json_dict=json.loads(_create_review_json_str(title="Ryan's better review"))))
 
+    def test_should_return_false_for_json_that_is_not_a_review(self):
+        self.assertFalse(app_store_fetcher.Review.is_review(
+            json.loads('{'
+              '"label":"http://is4.mzstatic.com/image/thumb/Purple49/v4/35/b2/6d/'
+                       '35b26d92-82f4-356c-8c7b-2600f0e204b3/mzl.kfiuakmi.png/53x53bb-85.png",'
+              '"attributes":{"height":"53"}}')
+        ))
+
+    def test_should_return_true_for_json_that_is_a_review(self):
+        self.assertTrue(app_store_fetcher.Review.is_review(_create_review_json_str()))
+
     def test_should_return_author_name(self):
         review = _review()
         self.assertEqual("Awesome he", review.author_name())
