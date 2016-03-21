@@ -1,6 +1,9 @@
 import json
 import unittest
-import unittest.mock
+try:
+    import unittest.mock as mock
+except ImportError:
+    import mock
 
 import requests
 
@@ -100,18 +103,18 @@ class TestFetchReviews(unittest.TestCase):
         super(TestFetchReviews, self).setUp()
 
         # Create the mock Response object. Each test can override the json.return_value as needed.
-        self.response_mock = unittest.mock.MagicMock(spec=requests.Response)
+        self.response_mock = mock.MagicMock(spec=requests.Response)
         self.response_mock.json.return_value = self._get_feed_json()
 
         # Setup the requests.get mock.
-        self.requests_get_mock = unittest.mock.MagicMock(spec=requests.get)
+        self.requests_get_mock = mock.MagicMock(spec=requests.get)
         self.requests_get_mock.return_value = self.response_mock
 
     def _get_feed_json(self, reviews_json_str=""):
         return json.loads(FEED_TEMPLATE.format(reviews_json_str=reviews_json_str))
 
     def test_should_create_url_with_app_id_and_page_num(self):
-        with unittest.mock.patch("requests.get", self.requests_get_mock) as requests_get_mock:
+        with mock.patch("requests.get", self.requests_get_mock) as requests_get_mock:
             app_store_fetcher.fetch_reviews(app_id=self.APP_ID, page_num=1)
 
             requests_get_mock.assert_called_once_with(
@@ -119,7 +122,7 @@ class TestFetchReviews(unittest.TestCase):
             )
 
     def test_should_not_return_any_reviews_if_no_reviews_found(self):
-        with unittest.mock.patch("requests.get", self.requests_get_mock):
+        with mock.patch("requests.get", self.requests_get_mock):
             reviews = app_store_fetcher.fetch_reviews(app_id=self.APP_ID, page_num=1)
 
             self.assertEqual([], reviews)
@@ -130,7 +133,7 @@ class TestFetchReviews(unittest.TestCase):
         self.response_mock.json.return_value = self._get_feed_json(
             reviews_json_str=",".join([review_str1, review_str2 + ","]),
         )
-        with unittest.mock.patch("requests.get", self.requests_get_mock) as requests_get_mock:
+        with mock.patch("requests.get", self.requests_get_mock) as requests_get_mock:
             reviews = app_store_fetcher.fetch_reviews(app_id=self.APP_ID, page_num=1)
 
             self.assertEqual([_review(json_dict=json.loads(review_str1)),
