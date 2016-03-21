@@ -1,4 +1,6 @@
+*.pyc
 .idea
 .vagrant/
 __pycache__/
 env/
+env_py_2_7/
