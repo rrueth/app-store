@@ -115,7 +115,7 @@ class TestFetchReviews(unittest.TestCase):
             app_store_fetcher.fetch_reviews(app_id=self.APP_ID, page_num=1)
 
             requests_get_mock.assert_called_once_with(
-                url="https://itunes.apple.com/us/rss/customerreviews/page=1/id=1234/sortBy=mostRecent/json",
+                "https://itunes.apple.com/us/rss/customerreviews/page=1/id=1234/sortBy=mostRecent/json",
             )
 
     def test_should_not_return_any_reviews_if_no_reviews_found(self):
