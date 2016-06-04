@@ -138,7 +138,7 @@ class TestFetchReviews(unittest.TestCase):
 
             self.assertEqual([_review(json_dict=json.loads(review_str1)),
                               _review(json_dict=json.loads(review_str2))],
-                             reviews)
+                             fetched_reviews)
 
 
 if __name__ == "__main__":
