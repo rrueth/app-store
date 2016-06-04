@@ -7,7 +7,7 @@ except ImportError:
 
 import requests
 
-import app_store_fetcher
+import reviews
 
 # The FEED_TEMPLATE requires the user to supply a 'reviews_json_str' parameter with format.
 FEED_TEMPLATE = u"""{{"feed":{{"author":{{"name":{{"label":"iTunes Store"}}, "uri":{{"label":"http://www.apple.com/itunes/"}}}}, "entry":[
@@ -49,7 +49,7 @@ def _create_review_json_str(title="Shop kick"):
 
 def _review(json_dict=None):
     json_dict = json_dict or json.loads(_create_review_json_str())
-    return app_store_fetcher.Review(json_dict)
+    return reviews.Review(json_dict)
 
 
 class TestReview(unittest.TestCase):
@@ -64,7 +64,7 @@ class TestReview(unittest.TestCase):
                             _review(json_dict=json.loads(_create_review_json_str(title="Ryan's better review"))))
 
     def test_should_return_false_for_json_that_is_not_a_review(self):
-        self.assertFalse(app_store_fetcher.Review.is_review(
+        self.assertFalse(reviews.Review.is_review(
             json.loads('{'
               '"label":"http://is4.mzstatic.com/image/thumb/Purple49/v4/35/b2/6d/'
                        '35b26d92-82f4-356c-8c7b-2600f0e204b3/mzl.kfiuakmi.png/53x53bb-85.png",'
@@ -72,7 +72,7 @@ class TestReview(unittest.TestCase):
         ))
 
     def test_should_return_true_for_json_that_is_a_review(self):
-        self.assertTrue(app_store_fetcher.Review.is_review(_create_review_json_str()))
+        self.assertTrue(reviews.Review.is_review(_create_review_json_str()))
 
     def test_should_return_author_name(self):
         review = _review()
@@ -115,7 +115,7 @@ class TestFetchReviews(unittest.TestCase):
 
     def test_should_create_url_with_app_id_and_page_num(self):
         with mock.patch("requests.get", self.requests_get_mock) as requests_get_mock:
-            app_store_fetcher.fetch_reviews(app_id=self.APP_ID, page_num=1)
+            reviews.fetch_reviews(app_id=self.APP_ID, page_num=1)
 
             requests_get_mock.assert_called_once_with(
                 "https://itunes.apple.com/us/rss/customerreviews/page=1/id=1234/sortBy=mostRecent/json",
@@ -123,9 +123,9 @@ class TestFetchReviews(unittest.TestCase):
 
     def test_should_not_return_any_reviews_if_no_reviews_found(self):
         with mock.patch("requests.get", self.requests_get_mock):
-            reviews = app_store_fetcher.fetch_reviews(app_id=self.APP_ID, page_num=1)
+            fetched_reviews = reviews.fetch_reviews(app_id=self.APP_ID, page_num=1)
 
-            self.assertEqual([], reviews)
+            self.assertEqual([], fetched_reviews)
 
     def test_should_return_multiple_reviews(self):
         review_str1 = _create_review_json_str(title="Bo's bad review")
@@ -134,7 +134,7 @@ class TestFetchReviews(unittest.TestCase):
             reviews_json_str=",".join([review_str1, review_str2 + ","]),
         )
         with mock.patch("requests.get", self.requests_get_mock) as requests_get_mock:
-            reviews = app_store_fetcher.fetch_reviews(app_id=self.APP_ID, page_num=1)
+            fetched_reviews = reviews.fetch_reviews(app_id=self.APP_ID, page_num=1)
 
             self.assertEqual([_review(json_dict=json.loads(review_str1)),
                               _review(json_dict=json.loads(review_str2))],
