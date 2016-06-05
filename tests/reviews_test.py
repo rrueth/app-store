@@ -7,7 +7,7 @@ except ImportError:
 
 import requests
 
-import reviews
+from app_store import reviews
 
 # The FEED_TEMPLATE requires the user to supply a 'reviews_json_str' parameter with format.
 FEED_TEMPLATE = u"""{{"feed":{{"author":{{"name":{{"label":"iTunes Store"}}, "uri":{{"label":"http://www.apple.com/itunes/"}}}}, "entry":[
