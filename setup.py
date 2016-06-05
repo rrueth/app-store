@@ -16,6 +16,8 @@ setup(
     long_description=long_description,
     url='https://github.com/rrueth/app-store',
     license='MIT',
+    author='Ryan Rueth',
+    author_email='rrueth@gmail.com',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
