@@ -10,7 +10,7 @@ with codecs.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='App Store',
+    name='app_store',
     version='1.0.0',
     description="Utilities for interacting with Apple's iTunes App Store",
     long_description=long_description,
