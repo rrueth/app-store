@@ -14,8 +14,7 @@ deploy:
   user: rrueth
   password:
     secure: tu6gmX79zYhy7aS5u/8KsoquycZc7nKVt5BYvkIFFl9LIdXIb5NaONpaLqWQawI4pMPJbDzCOFP2oKX+J0bBp7cll0mLY1BadLnGZEhgIw6zV8S3biD/IsMmybEOqCwxY9p6YsyFsSxvm3M7rVbiFvAZo5Nzuwj7IXY1wuNl8XIMnn5DgRiu2Eb4ZYLMSh+q1q0sUsxQ1Ma5fsI5G8bN5Htvk6oAfH+2GwrB78p+B8ClFpzGKJpjRoloWAWMPNODKBAO0aM02UdicrhO65t5Z6M+uQHYNeTfPYl5hDRg0y55aWELJ7DMpuzZUQYNl4D/tF++UStZfpTWt2SCWdldZhNldT8XFv5DqsOBdzoxl8zxSNnOHjEwN1UM8hZqyqdlZYGW9a++g/fhfEOZFil78dXILsdqfrfSSlXsn9LkpkQeUxkgp+FNZFYZ0hyB9Gjr6vRNEUld31R+cuytau6u3EF5DQYTe5Bh0ja2NehecM0j4O0xRC90kP/YR/mSS/dvRr61Lm517lNcVoPGocY8eQKwEZJnyRYbL3KthHqArrXnxhmKAEPCmflPvUED+2filPN4gJ39YimISVRatj9VOzxB4+PJ851Uv20klZVE0coYb88atGS2q6O6q3w6KFFFuPL8Ex6e8+MyJpOjHRwNsHCSNACK8AmMoOIKWmRqaro=
-  server: https://testpypi.python.org/pypi
   on:
     tags: true
     distributions: sdist bdist_wheel
-    repo: rrueth/app-store
+    repo: rrueth/app_store
