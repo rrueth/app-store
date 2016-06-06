@@ -11,7 +11,7 @@ with codecs.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='app_store',
-    version='1.0.0',
+    version='1.0.1',
     description="Utilities for interacting with Apple's iTunes App Store",
     long_description=long_description,
     url='https://github.com/rrueth/app-store',
